@@ -2,6 +2,7 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 
 const Logo = (message) => {
+  console.log(message);
   if (message.logo.length === 0 && message.website.length !== 0) {
     // console.log(message.website.split("www.")[1]);
     var joined =

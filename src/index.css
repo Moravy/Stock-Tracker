@@ -54,7 +54,7 @@ img {
   height: 100px;
   object-fit: cover;
 }
-div .text1 .card-text {
+/* div .text1 .card-text {
   color: black;
   font-weight: bold;
   position: absolute;
@@ -70,9 +70,19 @@ div .text2 .card-text {
   bottom: 0px;
   top: 80%;
   left: 39%;
+} */
+.card-text {
+  margin-top: 10px;
 }
-p {
-  display: inline;
+.card-footer {
+  background-color: white;
+  border-style: none;
+}
+.card .btn {
+  width: 100%;
+}
+.btn {
+  margin-right: 10px;
 }
 /* Style the counter cards */
 

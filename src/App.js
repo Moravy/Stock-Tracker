@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Header } from "./Component/Header";
-import Stock from "./Container/StockList";
+import TestStock from "./Container/StockList";
 
 class App extends Component {
   state = {};
@@ -8,7 +8,8 @@ class App extends Component {
     return (
       <React.Fragment>
         <Header />
-        <Stock />
+        <TestStock />
+        {/* <Stock /> */}
       </React.Fragment>
     );
   }
