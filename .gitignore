@@ -8,6 +8,9 @@
 # testing
 /coverage
 ignoredFolder/
+Api/
+/USAPi.json
+
 # production
 /build
 

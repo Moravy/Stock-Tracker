@@ -21,8 +21,8 @@ class Test extends Component {
     // console.log(message);
     fetch(
       "https://finnhub.io/api/v1/stock/profile2?symbol=" +
-        message +
-        "&token=bs17pofrh5r8enj77ptg"
+      message +
+      "&token=bs17pofrh5r8enj77ptg"
     )
       .then((response) => response.json())
       .then((data) => {
@@ -53,6 +53,7 @@ class Test extends Component {
     let price = this.props.value;
     return (
       <React.Fragment>
+
         <div className="column">
           <Card>
             <div className="imgCard"></div>

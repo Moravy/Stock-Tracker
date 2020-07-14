@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Header } from "./Component/Header";
-import TestStock from "./Container/StockList";
+import StockBody from "./Container/StockList";
+import Test from "./ignoredFolder/test";
 
 class App extends Component {
   state = {};
@@ -8,8 +9,8 @@ class App extends Component {
     return (
       <React.Fragment>
         <Header />
-        <TestStock />
-        {/* <Stock /> */}
+        {/* <Test /> */}
+        <StockBody />
       </React.Fragment>
     );
   }

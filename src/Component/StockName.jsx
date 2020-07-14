@@ -1,8 +1,8 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
+
 const StockName = (message) => {
   //   console.log(message);
-
   return (
     <React.Fragment>
       <Card.Subtitle>

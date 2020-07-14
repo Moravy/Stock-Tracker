@@ -84,6 +84,46 @@ div .text2 .card-text {
 .btn {
   margin-right: 10px;
 }
+
+.add{
+  margin-bottom: 30px;
+  width: 400px;
+  height: auto;
+  padding: 30px;
+  background-color: white;
+  border: none;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); 
+  transition: all 0.3s; 
+  border-radius: 50px;
+}
+
+.add:hover{
+  box-shadow: 0 14px 28px rgba(10, 192, 25, 0.25), 0 10px 10px rgba(0,0,0,0.22);
+  
+  transition: all 0.3s;
+  transform: translateZ(10px);
+}
+
+button{
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); 
+}
+
+button:hover{
+  box-shadow: 0 14px 28px rgba(0, 47, 255, 0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+
+.buttons{
+  display: inline-block;
+  margin-left: 30px;
+}
+
+.b{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
 /* Style the counter cards */
 
 /* Responsive columns - one column layout (vertical) on small screens */

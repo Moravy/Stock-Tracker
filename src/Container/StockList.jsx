@@ -4,8 +4,7 @@ import ws from "./socket";
 import Test from "./StockItem";
 import Button from "react-bootstrap/Button";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-// import ws from "./socket";
-// let ws = "";
+
 class stockList extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +14,7 @@ class stockList extends Component {
       prices: {},
       whichStock: "",
       prePrice: {},
+      value: "",
     };
   }
 
@@ -44,7 +44,7 @@ class stockList extends Component {
     };
   };
   //close connection
-  handleclose = () => {
+  handleClose = () => {
     ws.close();
   };
   //unsub item
@@ -57,6 +57,7 @@ class stockList extends Component {
   };
   //add item
   handleAdd = (message) => {
+    this.setState({ value: "" })
     this.setState(
       (prevState) => ({
         data: [...prevState.data, message],
@@ -68,16 +69,61 @@ class stockList extends Component {
         });
       })
     );
+
   };
+
+  handleDuplicatedStock = () => {
+
+    var inputField = document.getElementsByClassName("add")[0];
+    this.setState({ value: "" });
+    inputField.placeholder = "You have already enter this task"
+  }
+  handleChange = (event) => {
+    this.setState({ value: event.target.value });
+  }
+  handleSubmit = (event) => {
+    var inputField = document.getElementsByClassName("add")[0];
+    event.preventDefault();
+    this.state.data.includes(this.state.value) !== true
+      ? this.handleAdd(this.state.value)
+      : this.handleDuplicatedStock()
+
+
+    // fetch(
+    //   "https://us-central1-clear-tooling-281208.cloudfunctions.net/first-function/users",
+    //   {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({ id: this.state.id, todo: this.state.value }),
+    //   }
+    // ).then((res) => {
+    //   var inputField = document.getElementsByClassName("add")[0];
+    //   res.status !== 400
+    //     ? this.handleDup()
+    //     : (inputField.placeholder = "You have already enter this task");
+    //   inputField.value = "";
+    // });
+  }
   render() {
     return (
       <React.Fragment>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            value={this.state.value}
+            onChange={this.handleChange}
+            type="text"
+            className="add"
+          />
+          <div className="buttons">
+            <Button type="submit" className="b btn btn-success">
+              <i className="fa fa-plus"></i>
+            </Button>
+
+          </div>
+          <Button onClick={this.handleClose}>Close Socket</Button>
+        </form>
+
         <Container className="newCss py-5 bg-faded">
-          <Button onClick={this.handleclose}>as</Button>
-          <Button onClick={() => this.handleDelete("BINANCE:BTCUSDT")}>
-            delete
-          </Button>
-          <Button onClick={() => this.handleAdd("BINANCE:BNBBTC")}>add</Button>
           <div className="row">
             {this.state.data.map((item, index) => (
               <Test
