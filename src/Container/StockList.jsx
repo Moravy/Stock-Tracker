@@ -9,15 +9,19 @@ class stockList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: ["BINANCE:BTCUSDT", "BINANCE:ETHUSDT", "BINANCE:LTCBTC"],
+      // data: ["BINANCE:BTCUSDT", "BINANCE:ETHUSDT", "BINANCE:LTCBTC"],
+      data: ["AMD", "AAPL", "DAL"],
       id: "0",
       prices: {},
-      whichStock: "",
-      prePrice: {},
+      prePrice: "",
       value: "",
+      closeOrOpen: "",
+      openPrice: "",
     };
   }
 
+
+  // Dealing with socket 
   componentDidMount() {
     this.connect();
     // this.ws(this.state.data);
@@ -26,6 +30,22 @@ class stockList extends Component {
   //Connect: when the socket is open subscribe to all this symbol in data
   //and listen for prices changes
   connect = () => {
+    const convertTime = new Date().toLocaleString("en-US", {
+      timeZone: "America/New_York",
+    });
+    const nycTime = new Date(convertTime).getHours();
+    const nycMin = new Date(convertTime).getMinutes();
+    if (nycTime >= 9 && nycMin > 30 && nycTime < 16) {
+      this.handleOpenMarket();
+      this.setState({ closeOrOpen: true })
+    } else {
+      console.log("something")
+      this.handleCloseMarket();
+      this.setState({ closeOrOpen: false })
+    }
+  };
+
+  handleOpenMarket = () => {
     ws.onopen = () => {
       this.state.data.map((item) => {
         ws.send(JSON.stringify({ type: "subscribe", symbol: item }));
@@ -35,92 +55,126 @@ class stockList extends Component {
     ws.onmessage = (message) => {
       if (message.data[2] !== "t") {
         var data = JSON.parse(message.data).data;
-
         this.setState((prevState) => ({
-          whichStock: data[0].s,
           prices: { ...prevState.prices, [data[0].s]: data[0].p },
         }));
       }
     };
+  }
+
+  handleCloseMarket = () => {
+    // console.log(this.state.data)
+    this.state.data.map((item) => {
+      fetch(
+        "https://finnhub.io/api/v1/quote?symbol=" +
+        item +
+        "&token=bs17pofrh5r8enj77ptg"
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        }).then((data) => {
+          if (typeof data.error !== "undefined") {
+            this.handleErrorStock();
+          }
+          else {
+            this.setState((prevState) => ({
+              prices: { ...prevState.prices, [item]: data.c, [item + "open"]: data.o },
+            }))
+          }
+
+
+        })
+
+      // .then((data) => this.setState({ value: data.c, prePrice: data.pc }));
+
+    })
   };
   //close connection
   handleClose = () => {
     ws.close();
   };
+
   //unsub item
   handleDelete = (message) => {
-    console.log(message);
+    // console.log(message);
     ws.send(JSON.stringify({ type: "unsubscribe", symbol: message }));
     this.setState((prevState) => ({
       data: [...prevState.data.filter((element) => element !== message)],
     }));
   };
+
   //add item
   handleAdd = (message) => {
-    this.setState({ value: "" })
-    this.setState(
-      (prevState) => ({
-        data: [...prevState.data, message],
-      }),
-      (ws.onopen = () => {
-        this.state.data.map((item) => {
-          ws.send(JSON.stringify({ type: "subscribe", symbol: item }));
-          this.setState({ prices: { [item]: "" } });
-        });
-      })
-    );
+    if (this.state.closeOrOpen) {
+      this.setState({ value: "" })
+      this.setState(
+        (prevState) => ({
+          data: [...prevState.data, message],
+        }),
+        (ws.onopen = () => {
+          this.state.data.map((item) => {
+            ws.send(JSON.stringify({ type: "subscribe", symbol: item }));
+            this.setState({ prices: { [item]: "" } });
+          });
+        })
+      );
+    }
+    else {
+      this.setState({
+        data: [...this.state.data, message],
+      }, () => { this.handleCloseMarket() })
+    }
 
   };
 
+
+
+  // For searching 
   handleDuplicatedStock = () => {
 
     var inputField = document.getElementsByClassName("add")[0];
     this.setState({ value: "" });
     inputField.placeholder = "You have already enter this task"
   }
+  handleErrorStock = () => {
+    var inputField = document.getElementsByClassName("add")[0];
+    this.setState({ value: "" });
+    inputField.placeholder = "Stock is not Avaliable"
+  }
   handleChange = (event) => {
     this.setState({ value: event.target.value });
+
   }
+
   handleSubmit = (event) => {
-    var inputField = document.getElementsByClassName("add")[0];
     event.preventDefault();
     this.state.data.includes(this.state.value) !== true
       ? this.handleAdd(this.state.value)
       : this.handleDuplicatedStock()
-
-
-    // fetch(
-    //   "https://us-central1-clear-tooling-281208.cloudfunctions.net/first-function/users",
-    //   {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ id: this.state.id, todo: this.state.value }),
-    //   }
-    // ).then((res) => {
-    //   var inputField = document.getElementsByClassName("add")[0];
-    //   res.status !== 400
-    //     ? this.handleDup()
-    //     : (inputField.placeholder = "You have already enter this task");
-    //   inputField.value = "";
-    // });
   }
+
+
   render() {
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
           <input
+            placeholder="Add Stock"
             value={this.state.value}
             onChange={this.handleChange}
             type="text"
             className="add"
           />
+
           <div className="buttons">
             <Button type="submit" className="b btn btn-success">
               <i className="fa fa-plus"></i>
             </Button>
-
           </div>
-          <Button onClick={this.handleClose}>Close Socket</Button>
+          {/* <Button onClick={this.handleClose}>Close Socket</Button> */}
         </form>
 
         <Container className="newCss py-5 bg-faded">
@@ -131,6 +185,8 @@ class stockList extends Component {
                 name={item}
                 onDelete={this.handleDelete}
                 value={this.state.prices[item]}
+                openPrice={this.state.prices[item + "open"]}
+                openOrnot={this.state.closeOrOpen}
               />
             ))}
           </div>
