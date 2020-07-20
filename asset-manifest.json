@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/stock-tracker/static/css/main.12687603.chunk.css",
+    "main.js": "/stock-tracker/static/js/main.7d5a7749.chunk.js",
+    "main.js.map": "/stock-tracker/static/js/main.7d5a7749.chunk.js.map",
+    "runtime-main.js": "/stock-tracker/static/js/runtime-main.07596ede.js",
+    "runtime-main.js.map": "/stock-tracker/static/js/runtime-main.07596ede.js.map",
+    "static/css/2.af3c1da9.chunk.css": "/stock-tracker/static/css/2.af3c1da9.chunk.css",
+    "static/js/2.5f7d6892.chunk.js": "/stock-tracker/static/js/2.5f7d6892.chunk.js",
+    "static/js/2.5f7d6892.chunk.js.map": "/stock-tracker/static/js/2.5f7d6892.chunk.js.map",
+    "index.html": "/stock-tracker/index.html",
+    "precache-manifest.0a6b046d8e441da91b3d9a5c60e82866.js": "/stock-tracker/precache-manifest.0a6b046d8e441da91b3d9a5c60e82866.js",
+    "service-worker.js": "/stock-tracker/service-worker.js",
+    "static/css/2.af3c1da9.chunk.css.map": "/stock-tracker/static/css/2.af3c1da9.chunk.css.map",
+    "static/css/main.12687603.chunk.css.map": "/stock-tracker/static/css/main.12687603.chunk.css.map",
+    "static/js/2.5f7d6892.chunk.js.LICENSE.txt": "/stock-tracker/static/js/2.5f7d6892.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.07596ede.js",
+    "static/css/2.af3c1da9.chunk.css",
+    "static/js/2.5f7d6892.chunk.js",
+    "static/css/main.12687603.chunk.css",
+    "static/js/main.7d5a7749.chunk.js"
+  ]
+}
