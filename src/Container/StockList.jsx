@@ -133,22 +133,27 @@ class stockList extends Component {
 
 
   // For searching 
-  handleDuplicatedStock = () => {
 
+
+  //handle duplicating stock
+  handleDuplicatedStock = () => {
     var inputField = document.getElementsByClassName("add")[0];
     this.setState({ value: "" });
     inputField.placeholder = "You have already enter this task"
   }
+  // handle unavailable stock
   handleErrorStock = () => {
     var inputField = document.getElementsByClassName("add")[0];
     this.setState({ value: "" });
     inputField.placeholder = "Stock is not Avaliable"
   }
+
+  // handle changes in the input form
   handleChange = (event) => {
     this.setState({ value: event.target.value });
 
   }
-
+  // handle when submit check whether the stock is already made
   handleSubmit = (event) => {
     event.preventDefault();
     this.state.data.includes(this.state.value) !== true

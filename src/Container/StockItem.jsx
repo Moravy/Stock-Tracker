@@ -17,13 +17,11 @@ class Test extends Component {
 
 
   componentDidMount() {
-
     this.handleCompanyProfile(this.props.name);
   }
 
+  //get information about the company 
   handleCompanyProfile = (message) => {
-    // console.log(message)
-    // console.log(message);
     fetch(
       "https://finnhub.io/api/v1/stock/profile2?symbol=" +
       message +
@@ -41,23 +39,8 @@ class Test extends Component {
         });
       })
   };
-  // handlePriceText = () => {
-  //   { this.props.openOrnot ? "" : this.props.openPrice }
-  //   return (
-  //     <React.Fragment>
-  //       {/* OP: ${this.props.openPrice} */}
-  //       {/* <br></br> */}
-  //       <Card.Text className="current-open">
-  //         {((this.props.value - this.props.openPrice).toFixed(2) <= 0
-  //           ? " -"
-  //           : " +") +
-  //           Math.abs(this.props.value - this.props.openPrice).toFixed(2)}
-  //       </Card.Text>
-  //     </React.Fragment>
 
-  //   )
-  // }
-
+  //handle the color of current price - open price = round to two decimal  
   handleColor() {
     var sign =
       (this.props.value - this.props.openPrice).toFixed(2) <= 0 ? "- " : "+ ";
@@ -98,18 +81,10 @@ class Test extends Component {
                 />
               </Card.Title>
               <Card.Text>
-
                 <strong>${price}</strong>
               </Card.Text>
-              {/* {this.handlePriceText()} */}
               {this.handleColor()}
-              {/* <Card.Text style={{ color: "green" }}>$1.0</Card.Text> */}
-              {/* $1.0 */}
-              {/* {((this.state.value - this.state.prePrice).toFixed(2) <= 0
-                    ? "- "
-                    : "+ ") +
-                    Math.abs(this.state.value - this.state.prePrice).toFixed(2)} */}
-              {/* {this.handleColor()} */}
+
             </Card.Body>
 
             <Button

@@ -2,40 +2,41 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 
 const Logo = (message) => {
-  // console.log(message);
   try {
-
-
+    //check if logo not exist and website exist
     if (message.logo.length === 0 && message.website.length !== 0) {
-      // console.log(message.website.split("www.")[1]);
+
       var joined =
         "https://logo.clearbit.com/" + message.website.split("www.")[1];
       return (
-        <Card.Img
+        <a href={message.website}><Card.Img
           bsPrefix="card-img"
           variant="top"
           src={joined}
           className="mx-auto"
-        />
+        /></a>
       );
+      // check if both exist
     } else if (message.logo.length !== 0 && message.website.length !== 0) {
       return (
-        <Card.Img
+        <a href={message.website}><Card.Img
           bsPrefix="card-img"
           variant="top"
           src={message.logo}
           className="mx-auto"
-        />
+        /></a>
       );
     }
     else {
-      return <div></div>;
+      return <Card.Img
+        alt="cannot find image"
+      />;
     }
   }
   catch (error) {
     return (
       <Card.Img
-        alt="No image"
+        alt="STOCK is not Avaliable"
       />
     )
   }
